@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스파르타코딩클럽 | 로그인페이지</title>
+    <link rel="stylesheet" type="text/css" href="my.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        function q1() {
+            let orderUser = $("#orderUser").val();
+            let quantity = $("#quantity").val();
+            let address = $("#address").val();
+            let phonenumber = $("#phonenumber").val();
+            let phonenum = $('#phone').val();
+            let regPhone = /(01[0|1|6|9|7])[-](\d{3}|\d{4})[-](\d{4}$)/g;
+
+            if (orderUser.length < 1) {
+                alert("주문자 성함을 입력해주세요.");
+                return;
+            } else if (quantity.length < 1) {
+                alert("주문 수량을 입력해주세요.");
+                return;
+            } else if (address.length < 1) {
+                alert("주소를 입력해주세요.");
+                return;
+            } else if (phonenumber.length < 1) {
+                alert("전화번호를 입력해주세요.");
+                return;
+            }else if(!regPhone.test(phonenumber)){
+                alert("전화번호 형식에 맞추어 입력해주세요")
+                return;
+            }
+            let totalAmount = $("#quantity").val()*3000*$("#quantity").val()*$("#currency").val();
+            alert("총 주문 금액은 "+numberFormat(totalAmount)+"원 입니다");
+            let temp_html = `<tr>
+                                <td>${orderUser}</td>
+                                <td>${quantity}</td>
+                                <td>${address}</td>
+                                <td>${phonenumber}</td>
+                                <td>${numberFormat(totalAmount)}원</td>
+                            </tr>`
+            $("#order-q1").append(temp_html);
+
+        }
+        function numberFormat(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+    
+        $(document).ready(
+                function () {
+                $.ajax({
+                type: "GET",
+                url: "https://api.manana.kr/exchange/rate.json",
+                data: {},
+                success: function (response) {
+                    let usdKrw = response[1];
+                    let rate = usdKrw["rate"];
+                    let tempText = `달러-원 환율:${rate}`
+                    $("#currency").append(tempText);
+                    $("#currency").val(rate);
+                    }
+                })
+                }
+            );
+    </script>
+    <style>
+        table_1 {
+            border: 1px solid;
+            border-collapse: collapse;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="mytitle">
+
+        </div>
+        <h1>상품제목 </h1>
+        <h2>가격: $ 3,000/개</h2>
+        <h5 >회사 휴게실에 있어서 한번 써봤는데 너무 시원합니다.<br>
+            부모님 환갑 선물로 좋은 제품입니다.
+        </h5>
+        <h5 style="color:blue" id="currency">
+
+        </h5>
+        <br>
+
+        <div>
+            <table>
+                <colgroup>
+                    <col width="200">
+                    <col width="200">
+                </colgroup>
+                <tr>
+                    <td colspan="2">
+                        <h2>주문하기</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>주문자 성함: </td>
+                    <td><input id="orderUser" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>수량: </td>
+                    <td>
+                        <select id="quantity" style="width:170px; text-align-last:center">
+                            <option value="">--수량을 선택하세요--</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>주소:</td>
+                    <td><input type="address" id="address" /></td>
+                </tr>
+                <tr>
+                    <td>전화번호: </td>
+                    <td><input type="phonenumber" id="phonenumber" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><button onclick="q1()">주문하기</button></td>
+                </tr>
+                <tr>
+                    <td style="height:5px;">&nbsp;</td>
+                </tr>
+            </table>
+            
+            <table style="border: 1px solid black;border-collapse: collapse;">
+                <thead>
+                    <colgroup>
+                        <col width="150">
+                        <col width="60">
+                        <col width="500">
+                        <col width="200">
+                        <col width="200">
+                    </colgroup>
+                    <tr>
+                        <td>주문자 이름</td>
+                        <td>수량</td>
+                        <td>주소</td>
+                        <td>전화번호</td>
+                        <td>총 금액</td>
+                    </tr>
+                </thead>
+                <tbody id="order-q1">
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </div>
+</body>
+
+</html>

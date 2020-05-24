@@ -1,0 +1,22 @@
+.mytitle {
+    color: white;
+    width: 600px;
+    height: 600px;
+    background-image: url('http://thumb.cjmall.net/unsafe/fit-in/470x470/itemimage.cjmall.net/goods_images/59/066/59486066L.jpg?timestamp=20190926161144');
+    background-position: center;
+    background-size: cover;
+
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 40px;
+}
+
+.wrap {
+    width: 600px;
+    margin: auto;
+}
+* {
+    font-family: 'Gugi', cursive;
+}
+h1,h2 {display:inline}
+button {margin:auto}
