@@ -23,7 +23,7 @@ for page in range(1,6):
             artist = song.select_one('td.info>a.artist.ellipsis').text.strip() #print(title)
             print(rank, title , artist)
             
-#순위 Tag 1,2위 
+#순위 Tag 1,2위 (태그 구조 파악을 위해 2개정도는 봐준다.)
 #body-content > div.newest-list > div > table > tbody > tr:nth-child(1) > td.number        
 #body-content > div.newest-list > div > table > tbody > tr:nth-child(2) > td.number
 #제목 Tag
